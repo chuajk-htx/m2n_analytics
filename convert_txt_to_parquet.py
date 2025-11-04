@@ -1,6 +1,8 @@
 import polars as pl
 from pathlib import Path
 from tqdm import tqdm
+import pyarrow as pa
+import pyarrow.parquet as pq
 import sys
 
 def parse_record(record: str):
@@ -50,12 +52,27 @@ def convert_txt_to_parquet(input_file, output_file):
         "gender_probe": pl.Utf8,
         "ctycode_probe": pl.Utf8,
         "agegroup_probe": pl.Utf8,
-        "matching_result": pl.Int32
-    })
-    df.write_parquet(output_file,
-                     compression="zstd",
-                     compression_level=7,
-                     statistics=True)
+        "matching_result": pl.Int32})
+    
+    #table = pa.Table.from_pandas(df.to_pandas())
+    #pq.write_table(table,
+    #                 output_file,
+    #                 compression="gzip",
+    #                 compression_level=22,
+    #                 use_dictionary=True,
+    #                 data_page_version="2.0",
+    #                 )
+    
+    df.write_parquet(
+        output_file, 
+        compression="zstd",
+        compression_level=22,
+        use_pyarrow=True,
+        statistics=True,
+        row_group_size=100000,
+        data_page_size=1024*1024
+        )
+    
     print(f"Parquet file saved to {output_file}")
     return len(parsed_records)
     
