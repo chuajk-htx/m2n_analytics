@@ -1,0 +1,9 @@
+# Input folders here that you do not want to copy over to the docker image
+
+# We are only interested in moving the test_scripts, production, data clean up and resources to the docker image for testing purposes
+
+1.source_codes
+3.build
+5.documentation
+.vscode
+.ipynb_checkpoints

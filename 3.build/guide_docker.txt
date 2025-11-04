@@ -1,0 +1,15 @@
+Short guide a docker
+
+Docker image is just like a recipe, it containes the following:
+
+Technologies that we need
+Runtimes
+Tools or instructions to run our code
+
+Now we need something to actually run the code which is containers, this is like the actual meal which is what gets made from the recipe
+
+With one image, we can make more containers, which makes it easier to run the code
+
+Dockerfile is where we actually write our recipe
+
+In contrast, dockercompose yaml tells us how we want to run the image that we created the docker image

@@ -1,0 +1,7 @@
+tqdm 
+polars 
+clickhouse-connect
+pyarrow
+matplotlib
+seaborn
+plotly
