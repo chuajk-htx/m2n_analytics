@@ -1,6 +1,7 @@
 import os
 import random
 from tqdm import tqdm
+from pathlib import Path
 
 
 def get_padded_int_str(min: int, max : int):
@@ -32,10 +33,11 @@ def get_matching_results() -> str:
     max : int = 9999
     return get_padded_int_str(min, max)
 
-def create_mock_data(delimiter: str = ",", filepath: str = "mock_matching_results.txt") -> None:
+def create_mock_data(filepath: str, delimiter: str) -> None:
     max_bytes_size : int = 10*10**6  # 10 MB
-    if os.path.exists(filepath):
-        os.remove(filepath)
+    output_path = Path(filepath)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    
     try:
         total_bytes_size = 0
         progress_bar = tqdm(total=max_bytes_size, unit="B", unit_scale=True, desc="Generating mock data")
@@ -61,7 +63,7 @@ def create_mock_data(delimiter: str = ",", filepath: str = "mock_matching_result
 
 if __name__ == "__main__":
     delimiter = ","
-    create_mock_data(delimiter=delimiter, filepath="../mock_matching_scores.txt")
+    create_mock_data(delimiter=delimiter, filepath="../mock_data/mock_matching_001.txt")
     
 
 
