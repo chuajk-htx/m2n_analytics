@@ -13,11 +13,11 @@ def parse_record(record: str):
         return None
     try:
         return {
-            "uid_enrolled": record[0:8],
+            "uid_enrolled": int(record[0:7]),
             "gender_enrolled": record[8],
             "ctycode_enrolled": record[9:12],
             "agegroup_enrolled": record[12],
-            "uid_probe": record[12:19],
+            "uid_probe": int(record[12:18]),
             "gender_probe": record[19],
             "ctycode_probe": record[20:23],
             "agegroup_probe": record[23],
@@ -44,11 +44,11 @@ def convert_txt_to_parquet(input_file, output_file):
         if parse_record(record) is not None:
             parsed_records.append(parse_record(record))
     df = pl.DataFrame(parsed_records, schema={
-        "uid_enrolled": pl.Utf8,
+        "uid_enrolled": pl.Int32,
         "gender_enrolled": pl.Utf8,
         "ctycode_enrolled": pl.Utf8,
         "agegroup_enrolled": pl.Utf8,
-        "uid_probe": pl.Utf8,
+        "uid_probe": pl.Int32,
         "gender_probe": pl.Utf8,
         "ctycode_probe": pl.Utf8,
         "agegroup_probe": pl.Utf8,
@@ -69,7 +69,7 @@ def convert_txt_to_parquet(input_file, output_file):
         compression_level=22,
         use_pyarrow=True,
         statistics=True,
-        row_group_size=100000,
+        row_group_size=500000,
         data_page_size=1024*1024
         )
     
